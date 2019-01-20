@@ -27,74 +27,80 @@ export GO111MODULE=on
 .PHONY: windows-x86
 .PHONY: build run clean test lint integration-test clean-integration-test
 
+ifdef V
+Q=
+else
+Q=@
+endif
+
 generate:
-	@ go generate -mod=vendor
+	${Q} go generate -mod=vendor
 
 miniflux: generate
-	@ go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP) main.go
+	${Q} go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP) main.go
 
 linux-amd64: generate
-	@ GOOS=linux GOARCH=amd64 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-linux-amd64 main.go
+	${Q} GOOS=linux GOARCH=amd64 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-linux-amd64 main.go
 
 linux-armv8: generate
-	@ GOOS=linux GOARCH=arm64 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-linux-armv8 main.go
+	${Q} GOOS=linux GOARCH=arm64 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-linux-armv8 main.go
 
 linux-armv7: generate
-	@ GOOS=linux GOARCH=arm GOARM=7 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-linux-armv7 main.go
+	${Q} GOOS=linux GOARCH=arm GOARM=7 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-linux-armv7 main.go
 
 linux-armv6: generate
-	@ GOOS=linux GOARCH=arm GOARM=6 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-linux-armv6 main.go
+	${Q} GOOS=linux GOARCH=arm GOARM=6 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-linux-armv6 main.go
 
 linux-armv5: generate
-	@ GOOS=linux GOARCH=arm GOARM=5 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-linux-armv5 main.go
+	${Q} GOOS=linux GOARCH=arm GOARM=5 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-linux-armv5 main.go
 
 darwin-amd64: generate
-	@ GOOS=darwin GOARCH=amd64 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-darwin-amd64 main.go
+	${Q} GOOS=darwin GOARCH=amd64 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-darwin-amd64 main.go
 
 freebsd-amd64: generate
-	@ GOOS=freebsd GOARCH=amd64 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-freebsd-amd64 main.go
+	${Q} GOOS=freebsd GOARCH=amd64 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-freebsd-amd64 main.go
 
 openbsd-amd64: generate
-	@ GOOS=openbsd GOARCH=amd64 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-openbsd-amd64 main.go
+	${Q} GOOS=openbsd GOARCH=amd64 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-openbsd-amd64 main.go
 
 windows-amd64: generate
-	@ GOOS=windows GOARCH=amd64 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-windows-amd64 main.go
+	${Q} GOOS=windows GOARCH=amd64 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-windows-amd64 main.go
 
 build: linux-amd64 linux-armv8 linux-armv7 linux-armv6 linux-armv5 darwin-amd64 freebsd-amd64 openbsd-amd64 windows-amd64
 
 # NOTE: unsupported targets
 netbsd-amd64: generate
-	@ GOOS=netbsd GOARCH=amd64 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-netbsd-amd64 main.go
+	${Q} GOOS=netbsd GOARCH=amd64 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-netbsd-amd64 main.go
 	
 linux-x86: generate
-	@ GOOS=linux GOARCH=386 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-linux-x86 main.go
+	${Q} GOOS=linux GOARCH=386 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-linux-x86 main.go
 
 darwin-x86: generate
-	@ GOOS=darwin GOARCH=386 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-darwin-x86 main.go
+	${Q} GOOS=darwin GOARCH=386 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-darwin-x86 main.go
 
 freebsd-x86: generate
-	@ GOOS=freebsd GOARCH=386 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-freebsd-x86 main.go
+	${Q} GOOS=freebsd GOARCH=386 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-freebsd-x86 main.go
 
 netbsd-x86: generate
-	@ GOOS=netbsd GOARCH=386 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-netbsd-x86 main.go
+	${Q} GOOS=netbsd GOARCH=386 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-netbsd-x86 main.go
 
 openbsd-x86: generate
-	@ GOOS=openbsd GOARCH=386 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-freebsd-x86 main.go
+	${Q} GOOS=openbsd GOARCH=386 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-freebsd-x86 main.go
 
 windows-x86: generate
-	@ GOOS=windows GOARCH=386 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-windows-x86 main.go
+	${Q} GOOS=windows GOARCH=386 go build -mod=vendor -ldflags=$(LD_FLAGS) -o $(APP)-windows-x86 main.go
 
 run: generate
-	@ go run -mod=vendor main.go -debug
+	${Q} go run -mod=vendor main.go -debug
 
 clean:
-	@ rm -f $(APP)-* $(APP)
+	${Q} rm -f $(APP)-* $(APP)
 
 test:
 	go test -mod=vendor -cover -race -count=1 ./...
 
 lint:
-	@ golint -set_exit_status ${PKG_LIST}
+	${Q} golint -set_exit_status ${PKG_LIST}
 
 integration-test:
 	psql -U postgres -c 'drop database if exists miniflux_test;'
@@ -107,7 +113,7 @@ integration-test:
 	go test -mod=vendor -v -tags=integration -count=1 miniflux.app/tests || cat /tmp/miniflux.log
 
 clean-integration-test:
-	@ kill -9 `cat /tmp/miniflux.pid`
-	@ rm -f /tmp/miniflux.pid /tmp/miniflux.log
-	@ rm miniflux-test
-	@ psql -U postgres -c 'drop database if exists miniflux_test;'
+	${Q} kill -9 `cat /tmp/miniflux.pid`
+	${Q} rm -f /tmp/miniflux.pid /tmp/miniflux.log
+	${Q} rm miniflux-test
+	${Q} psql -U postgres -c 'drop database if exists miniflux_test;'
