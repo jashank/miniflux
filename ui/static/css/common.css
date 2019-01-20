@@ -140,7 +140,7 @@ a:hover {
 @media (min-width: 600px) {
     body {
         margin: auto;
-        max-width: 750px;
+        /* max-width: 750px; */
     }
 
     .header {
@@ -447,6 +447,7 @@ a.button {
     box-shadow: 2px 0 5px 0 #ccc;
     padding: 5px;
     padding-top: 30px;
+    display: none;
 }
 
 #modal-left h3 {
@@ -864,4 +865,23 @@ article.feed-parsing-error {
     font-weight: 600;
     text-decoration: none;
     font-size: 1.2em;
+}
+
+/***********************************************************************
+ * Kindle styles.
+ */
+@media screen and not ((width: 1072) and (height: 1448)) {
+    #modal-left { display: block; }
+}
+
+@media not ((width: 1072) and (height: 1448)) {
+    body {
+        margin: auto;
+        max-width: 750px;
+    }
+}
+
+body {
+    margin-left: 1em;
+    margin-right: 1em;
 }
