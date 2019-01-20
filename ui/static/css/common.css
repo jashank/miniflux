@@ -884,4 +884,6 @@ article.feed-parsing-error {
 body {
     margin-left: 1em;
     margin-right: 1em;
+    color: black !important;
 }
+.entry-content { color: black !important; }
